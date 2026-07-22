@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gbolahan — Software for real businesses</title>
+<link rel="icon" type="image/png" href="favicon.png">
+
+<meta property="og:title" content="Gbolahan — Software for individuals and organisations">
+<meta property="og:description" content="Practical software for individuals and organisations — built, deployed, and maintained. Go, PostgreSQL, and UI/UX design.">
+<meta property="og:image" content="https://gbolaww.github.io/myportfolio/og-image.png">
+<meta property="og:url" content="https://gbolaww.github.io/myportfolio/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gbolahan — Software for individuals and organisations">
+<meta name="twitter:description" content="Practical software for individuals and organisations — built, deployed, and maintained.">
+<meta name="twitter:image" content="https://gbolaww.github.io/myportfolio/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0D1420;
+    --bg-raised: #131C2B;
+    --green: #00A65A;
+    --green-dim: #0C4A31;
+    --amber: #F2A93B;
+    --text: #EAEEF3;
+    --muted: #8792A3;
+    --line: #24304373;
+    --paper: #F7F5EF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif; margin:0;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:10;
+    backdrop-filter:blur(10px);
+    background:rgba(13,20,32,0.85);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px;}
+  .brand{font-weight:600;letter-spacing:0.02em;font-size:1.05rem;}
+  .brand span{color:var(--green);}
+  nav ul{list-style:none;display:flex;gap:28px;margin:0;padding:0;}
+  nav a{text-decoration:none;color:var(--muted);font-size:0.92rem;transition:color .2s;}
+  nav a:hover{color:var(--text);}
+  .nav-cta{
+    background:var(--green);color:#04150C;padding:8px 16px;border-radius:6px;
+    font-weight:600;font-size:0.88rem !important;
+  }
+  .nav-cta:hover{color:#04150C !important;opacity:0.9;}
+
+  /* HERO */
+  .hero{padding:110px 0 90px;position:relative;overflow:hidden;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--green);font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;
+    font-family:'IBM Plex Mono',monospace;margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px var(--green-dim);}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;line-height:1.08;max-width:780px;letter-spacing:-0.01em;}
+  .hero h1 em{font-style:normal;color:var(--green);}
+  .hero p{color:var(--muted);font-size:1.15rem;max-width:560px;margin-top:22px;}
+  .hero-actions{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;}
+  .btn{padding:12px 22px;border-radius:7px;font-weight:600;font-size:0.95rem;text-decoration:none;display:inline-block;transition:transform .15s, opacity .15s;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--green);color:#04150C;}
+  .btn-primary:hover{color:#04150C;}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);}
+
+  /* terminal */
+  .terminal{
+    margin-top:60px;max-width:620px;
+    background:var(--bg-raised);border:1px solid var(--line);border-radius:10px;
+    overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid var(--line);}
+  .terminal-bar span{width:10px;height:10px;border-radius:50%;background:#3a4658;}
+  .terminal-body{padding:20px 22px;font-family:'IBM Plex Mono',monospace;font-size:0.86rem;color:#B9C2D0;min-height:150px;}
+  .terminal-body .prompt{color:var(--green);}
+  .cursor{display:inline-block;width:7px;height:15px;background:var(--amber);vertical-align:middle;animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* SECTION HEADERS */
+  section{padding:90px 0;border-top:1px solid var(--line);}
+  .section-head{margin-bottom:52px;max-width:640px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.3rem);}
+  .section-head p{color:var(--muted);margin-top:14px;font-size:1.02rem;}
+
+  /* PROJECT = RECEIPT CARD */
+  .projects{display:flex;flex-direction:column;gap:44px;}
+  .receipt{
+    background:var(--paper);color:#1A1E17;border-radius:4px;
+    position:relative;padding:36px 38px 30px;
+    box-shadow:0 25px 50px -20px rgba(0,0,0,0.55);
+  }
+  .receipt::before, .receipt::after{
+    content:'';position:absolute;left:0;right:0;height:14px;
+    background-image: radial-gradient(circle at 10px 0, transparent 8px, var(--bg) 8px);
+    background-size: 20px 14px; background-repeat:repeat-x;
+  }
+  .receipt::before{top:-1px;transform:rotate(180deg);}
+  .receipt::after{bottom:-1px;}
+  .receipt-top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px dashed #2b2e2a55;padding-bottom:16px;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+  .receipt-top h3{font-size:1.5rem;}
+  .receipt-tag{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;background:#0D1420;color:var(--green);padding:5px 10px;border-radius:4px;}
+  .receipt-desc{font-size:0.98rem;color:#3a3d38;max-width:560px;}
+  .receipt-lines{margin:22px 0;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;}
+  .receipt-line{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dotted #2b2e2a33;color:#2b2e28;}
+  .receipt-line span:first-child{color:#5c5f57;}
+  .receipt-foot{display:flex;justify-content:space-between;align-items:center;border-top:1.5px dashed #2b2e2a55;padding-top:16px;margin-top:6px;flex-wrap:wrap;gap:14px;}
+  .stack-pills{display:flex;gap:8px;flex-wrap:wrap;}
+  .pill{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;background:#0D142010;border:1px solid #2b2e2a33;padding:4px 9px;border-radius:20px;color:#3a3d38;}
+  .receipt-link{font-weight:600;font-size:0.9rem;color:#0C4A31;text-decoration:none;border-bottom:2px solid var(--green);}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:start;}
+  .about-grid p{color:var(--muted);font-size:1.02rem;}
+  .stat-block{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .stat{background:var(--bg-raised);border:1px solid var(--line);border-radius:10px;padding:20px;}
+  .stat b{display:block;font-family:'Space Grotesk',sans-serif;font-size:1.6rem;color:var(--green);}
+  .stat span{color:var(--muted);font-size:0.85rem;}
+
+  /* CONTACT */
+  .contact-box{
+    background:var(--bg-raised);border:1px solid var(--line);border-radius:14px;
+    padding:48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+  }
+  .contact-box h2{font-size:1.8rem;max-width:420px;}
+  footer{padding:34px 0;color:var(--muted);font-size:0.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);}
+
+  /* DESIGN */
+  .design-scroll{display:flex;gap:22px;overflow-x:auto;padding-bottom:14px;scrollbar-width:thin;}
+  .design-card{flex:0 0 auto;width:340px;background:var(--bg-raised);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .design-shot-frame{background:#F7F5EF;border-bottom:1px solid var(--line);}
+  .design-shot-bar{display:flex;gap:6px;padding:10px 12px;}
+  .design-shot-bar span{width:9px;height:9px;border-radius:50%;background:#d8d5cc;}
+  .design-shot-frame img{display:block;width:100%;height:210px;object-fit:cover;object-position:top;}
+  .design-card-body{padding:16px 18px;}
+  .design-card-body h4{font-size:0.98rem;font-weight:600;margin-bottom:5px;}
+  .design-card-body p{color:var(--muted);font-size:0.85rem;margin:0;}
+  .design-footer{display:flex;justify-content:space-between;align-items:center;margin-top:34px;flex-wrap:wrap;gap:16px;}
+  .design-footer p{color:var(--muted);margin:0;font-size:0.95rem;}
+
+  .design-subhead{display:flex;justify-content:space-between;align-items:baseline;margin:40px 0 18px;flex-wrap:wrap;gap:10px;}
+  .design-subhead h3{font-size:1.05rem;font-weight:600;}
+  .design-subhead a{font-size:0.85rem;color:var(--green);text-decoration:none;border-bottom:1px solid var(--green-dim);}
+  .design-card.mobile .design-shot-frame img{height:320px;object-fit:cover;object-position:top;}
+  .design-card.mobile{width:220px;}
+
+  @media(max-width:760px){
+    .about-grid{grid-template-columns:1fr;}
+    nav ul{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Gbola<span>ww</span> /dev</div>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Start a project</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Based in Ogun State, Nigeria</div>
+    <h1>Practical software for <em>individuals and organisations</em> — built, deployed, and maintained.</h1>
+    <p>From internal tools to customer-facing systems, I design and ship software that fits how you actually work.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#work">See the products</a>
+      <a class="btn btn-ghost" href="#contact">Talk about your business</a>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div class="terminal-body" id="term"></div>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Products</div>
+      <h2>Two systems, built for how Nigerian businesses actually operate</h2>
+      <p>Each one started as a real problem for a real business owner — not a demo. Both are live and deployed.</p>
+    </div>
+
+    <div class="projects">
+
+      <div class="receipt">
+        <div class="receipt-top">
+          <div>
+            <h3>School Manager</h3>
+            <div class="receipt-desc">A complete school management web app for Nigerian secondary schools — enrollment, results, and report cards, without the spreadsheets.</div>
+          </div>
+          <div class="receipt-tag">Deployed</div>
+        </div>
+        <div class="receipt-lines">
+          <div class="receipt-line"><span>Admin &amp; teacher login</span><span>role-based</span></div>
+          <div class="receipt-line"><span>Student enrollment</span><span>CSV bulk import</span></div>
+          <div class="receipt-line"><span>Result entry</span><span>auto grade calc</span></div>
+          <div class="receipt-line"><span>Report cards</span><span>PDF, per term</span></div>
+          <div class="receipt-line"><span>Dashboard</span><span>live, per school</span></div>
+        </div>
+        <div class="receipt-foot">
+          <div class="stack-pills">
+            <span class="pill">Go</span><span class="pill">PostgreSQL</span><span class="pill">Railway</span><span class="pill">gofpdf</span>
+          </div>
+          <a class="receipt-link" href="#contact">Book a demo for your school →</a>
+        </div>
+      </div>
+
+      <div class="receipt">
+        <div class="receipt-top">
+          <div>
+            <h3>WhatsApp Order Bot</h3>
+            <div class="receipt-desc">Customers browse, order, and pay for food or groceries entirely inside WhatsApp — no app download, no new habits to learn.</div>
+          </div>
+          <div class="receipt-tag">Live payments</div>
+        </div>
+        <div class="receipt-lines">
+          <div class="receipt-line"><span>Menu &amp; cart</span><span>in-chat</span></div>
+          <div class="receipt-line"><span>Pickup / delivery</span><span>customer choice</span></div>
+          <div class="receipt-line"><span>Payment</span><span>Paystack, live mode</span></div>
+          <div class="receipt-line"><span>Admin dashboard</span><span>products, orders, feedback</span></div>
+          <div class="receipt-line"><span>Media</span><span>Cloudinary hosted</span></div>
+        </div>
+        <div class="receipt-foot">
+          <div class="stack-pills">
+            <span class="pill">Go</span><span class="pill">Twilio</span><span class="pill">Paystack</span><span class="pill">PostgreSQL</span>
+          </div>
+          <a class="receipt-link" href="https://github.com/Gbolaww/supermarket--bot" target="_blank" rel="noopener">View the repo →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="design">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Design</div>
+      <h2>Interfaces I've designed, not just built</h2>
+      <p>UI/UX work for a School Health Management System — dashboards, clinical workflows, and patient-facing screens, designed in Figma.</p>
+    </div>
+
+    <div class="design-subhead">
+      <h3>School Health Management System</h3>
+      <a href="https://www.figma.com/design/wwOSLAC1uaWf0aVJIhFwOD/shms?node-id=0-1&t=F8Cgccyw1LbqSD1L-1" target="_blank" rel="noopener">View full designs on Figma →</a>
+    </div>
+
+    <div class="design-scroll">
+      <div class="design-card">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/analytics.png" alt="Analytics dashboard screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Analytics dashboard</h4>
+          <p>Health, clinical, and operational insights at a glance.</p>
+        </div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/aichecker.png" alt="AI symptom checker screen">
+        </div>
+        <div class="design-card-body">
+          <h4>AI symptom checker</h4>
+          <p>Conversational triage flow with confidence scoring and escalation.</p>
+        </div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/profile.png" alt="Digital patient profile screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Digital patient profile</h4>
+          <p>A single record view pulling vitals, history, and documents together.</p>
+        </div>
+      </div>
+
+      <div class="design-card">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/waitingroom.png" alt="Waiting room display screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Waiting room display</h4>
+          <p>Live queue screen designed for a shared, at-a-glance view.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-subhead">
+      <h3>KUPA — Food Delivery App</h3>
+      <a href="https://www.figma.com/design/duwzIk7MP5Q0nJfTHyWWoa/kupa-food?node-id=0-1&t=vL0Pj5LHUn71Nsgy-1" target="_blank" rel="noopener">View full designs on Figma →</a>
+    </div>
+    <div class="design-scroll" id="kupa-scroll">
+      <div class="design-card mobile">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/splash.png" alt="KUPA splash screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Splash screen</h4>
+          <p>Brand entry point for the delivery app.</p>
+        </div>
+      </div>
+
+      <div class="design-card mobile">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/onboarding.png" alt="KUPA onboarding screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Onboarding</h4>
+          <p>Introducing the ordering and delivery experience.</p>
+        </div>
+      </div>
+
+      <div class="design-card mobile">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/login.png" alt="KUPA login screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Sign in</h4>
+          <p>Returning-user login with social auth options.</p>
+        </div>
+      </div>
+
+      <div class="design-card mobile">
+        <div class="design-shot-frame">
+          <div class="design-shot-bar"><span></span><span></span><span></span></div>
+          <img src="images/signup.png" alt="KUPA sign up screen">
+        </div>
+        <div class="design-card-body">
+          <h4>Sign up</h4>
+          <p>New account creation flow.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-footer">
+      <p>Two products, two very different design problems — clinical workflow vs. consumer ordering.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <div class="eyebrow">About</div>
+        <h2 style="margin-top:14px;font-size:1.9rem;">Strong engineering fundamentals, an eye for how things should look and feel</h2>
+        <p style="margin-top:20px;">I work across Go and Python, and pair that with UI/UX design — so what I ship isn't just functional, it's built to actually be used. I care about understanding the real problem first, then building the smallest thing that solves it well: designed properly, deployed, and maintained.</p>
+      </div>
+      <div class="stat-block">
+        <div class="stat"><b>2</b><span>Products shipped &amp; live</span></div>
+        <div class="stat"><b>Go/Py</b><span>Core languages</span></div>
+        <div class="stat"><b>v20</b><span>Iterations on the bot codebase</span></div>
+        <div class="stat"><b>NGN</b><span>Priced for local businesses</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Running a school, restaurant, or supermarket that's still doing this by hand?</h2>
+      <a class="btn btn-primary" href="mailto:olawunmiakinlabi@gmail.com">Send an email</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;">
+    <span>© 2026 Gbolahan — built with Go, deployed on Railway.</span>
+    <span><a href="https://github.com/Gbolaww" target="_blank" rel="noopener">github.com/Gbolaww</a></span>
+  </div>
+</footer>
+
+<script>
+  const lines = [
+    { p: '$', t: 'deploy school-manager --env=production' },
+    { p: '✓', t: 'PostgreSQL connected · 4 classes · 212 students loaded' },
+    { p: '$', t: 'deploy whatsapp-bot --client=restaurant', delay:true },
+    { p: '✓', t: 'Twilio webhook live · Paystack: live mode confirmed' },
+  ];
+  const el = document.getElementById('term');
+  let out = '';
+  function typeLine(i, cb){
+    if(i >= lines.length){ el.innerHTML = out + '<span class="cursor"></span>'; return; }
+    const line = lines[i];
+    const prefix = `<span class="prompt">${line.p}</span> `;
+    let charI = 0;
+    const full = line.t;
+    function step(){
+      el.innerHTML = out + prefix + full.slice(0,charI) + '<span class="cursor"></span>';
+      charI++;
+      if(charI <= full.length){
+        setTimeout(step, 18);
+      } else {
+        out += prefix + full + '<br>';
+        setTimeout(()=>typeLine(i+1), 400);
+      }
+    }
+    step();
+  }
+  typeLine(0);
+</script>
+
+</body>
+</html>
